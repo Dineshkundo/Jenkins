@@ -1,0 +1,30 @@
+Prerequisites:
+Make sure create service account and add credentials in jenkins env globaly.
+Note:
+jenkins-key reffers to service account key.
+
+pipeline {
+    agent any
+    environment {
+        CLOUDSDK_CORE_PROJECT = 'xenon-timer-414316'
+        CLIENT_EMAIL = 'jenkins@xenon-timer-414316.iam.gserviceaccount.com'
+        GCLOUD_CREDS = credentials('jenkins-key')
+    }
+
+    stages {
+        stage('Authentication with gcp') {
+            steps {
+                sh '''
+                    gcloud version
+                    gcloud auth activate-service-account --key-file="${GCLOUD_CREDS}"
+                    gcloud compute zones list
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            sh 'gcloud auth revoke ${CLIENT_EMAIL}'
+        }
+    }
+}
