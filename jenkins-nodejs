@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/summu97/react.js.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh '''
+                npm install
+                npm run build
+                '''
+            }
+        }
+        stage('deploy') {
+            steps {
+                sh '''
+                echo "dinesh" | sudo -S mv build/* /var/www/html
+                '''
+            }
+        }
+        stage('Zip') {
+            steps {
+                sh 'zip -r package_release.zip build/'
+            }
+        }
+    }
+}
+
+##########################
+   17  apt install nginx -y
+   18  ls
+   19  nginx -v
+   20  cd /var/www/html
+   21  ls
+   22  rm -rf *
+   23  ls
+   24  cd ../../..
+   25  ls
+   26  cd /var/lib/jenkins/workspace/nodejs
+   27  ls
+   28  cd
+   29  cd /var/lib/jenkins/
+   30  ls
+   31  passwd jenkins
+   32  cd
+   33  vim /etc/sudoers
+   34  ls -al /etc
+   35  chmod 777 /etrc/sudoers
+   36  chmod 777 /etc/sudoers
+   37  ls -al /etc
+   38  vim /etc/sudoers
+   39  chmod 440 /etc/sudoers
