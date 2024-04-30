@@ -1,3 +1,9 @@
+This project is parameterized.
+Branch
+Choice Parameter:-
+master
+main
+##########################
 pipeline {
     agent any
 
